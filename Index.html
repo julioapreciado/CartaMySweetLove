@@ -13,9 +13,38 @@
       overflow-x: hidden;
     }
 
+    #intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #verCarta {
+      font-size: 1.3em;
+      padding: 15px 30px;
+      background-color: #ff88aa;
+      border: none;
+      border-radius: 30px;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s;
+    }
+
+    #verCarta:hover {
+      background-color: #e76c91;
+    }
+
+    #contenido {
+      display: none;
+      padding: 40px 20px;
+    }
+
     h1 {
       font-size: 2.8em;
-      margin-top: 50px;
+      margin-top: 20px;
     }
 
     p {
@@ -82,27 +111,37 @@
   </style>
 </head>
 <body>
-  <h1>Para Ti, Mi Amor 💖</h1>
-  <div class="corazon">❤️</div>
 
-  <p>
-    Esta no es solo una carta... es un pedacito de mi corazón escrito con sinceridad.  
-    Cada palabra que lees aquí nace del amor que siento por ti.  
-    Gracias por hacer de mi vida un lugar mejor, por tu risa, por tu ternura,  
-    y por ser tú. Eres mi inspiración diaria y mi alegría constante.
-  </p>
+  <!-- Pantalla de inicio -->
+  <div id="intro">
+    <h1>💌 Tengo algo especial para ti...</h1>
+    <button id="verCarta">Abrir carta con amor 💖</button>
+  </div>
 
-  <p>
-    Espero que siempre recuerdes esto:  
-    Eres suficiente, única, valiosa y profundamente amada.  
-    Te quiero más allá de las palabras, más allá del tiempo y la distancia.
-  </p>
+  <!-- Contenido de la carta -->
+  <div id="contenido">
+    <h1>Para Ti, Mi Amor 💖</h1>
+    <div class="corazon">❤️</div>
 
-  <div class="corazon">✨💖✨</div>
+    <p>
+      Esta no es solo una carta... es un pedacito de mi corazón escrito con sinceridad.  
+      Cada palabra que lees aquí nace del amor que siento por ti.  
+      Gracias por hacer de mi vida un lugar mejor, por tu risa, por tu ternura,  
+      y por ser tú. Eres mi inspiración diaria y mi alegría constante.
+    </p>
 
-  <div class="firma">
-    Con todo mi amor,<br>
-    tu novio Julio César 💘🌹
+    <p>
+      Espero que siempre recuerdes esto:  
+      Eres suficiente, única, valiosa y profundamente amada.  
+      Te quiero más allá de las palabras, más allá del tiempo y la distancia.
+    </p>
+
+    <div class="corazon">✨💖✨</div>
+
+    <div class="firma">
+      Con todo mi amor,<br>
+      tu novio Julio César 💘🌹
+    </div>
   </div>
 
   <!-- Corazones flotando -->
@@ -116,7 +155,10 @@
       document.body.appendChild(heart);
       setTimeout(() => heart.remove(), 10000);
     }
-    setInterval(crearCorazon, 500);
+
+    function iniciarCorazones() {
+      setInterval(crearCorazon, 500);
+    }
   </script>
 
   <!-- Reproductor de música -->
@@ -124,12 +166,26 @@
     <source src="https://dl.dropboxusercontent.com/scl/fi/0zj1hz8wm1txenbmvceay/Contigo-Carla-Morrison.mp3?rlkey=ykg8b6s5uvuv6pnfhuig89yo7&dl=0" type="audio/mpeg">
     Tu navegador no soporta audio HTML5.
   </audio>
-  <button id="playBtn">▶️</button>
+  <button id="playBtn" style="display:none;">▶️</button>
 
+  <!-- Lógica -->
   <script>
+    const verCarta = document.getElementById('verCarta');
+    const contenido = document.getElementById('contenido');
+    const intro = document.getElementById('intro');
     const cancion = document.getElementById('cancion');
     const playBtn = document.getElementById('playBtn');
     let playing = false;
+
+    verCarta.addEventListener('click', () => {
+      intro.style.display = 'none';
+      contenido.style.display = 'block';
+      iniciarCorazones();
+      cancion.play();
+      playing = true;
+      playBtn.textContent = '⏸️';
+      playBtn.style.display = 'block';
+    });
 
     playBtn.addEventListener('click', () => {
       if (!playing) {
