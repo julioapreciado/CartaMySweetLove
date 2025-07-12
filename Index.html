@@ -1,31 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Carta Para Ti</title>
+  <meta charset="UTF-8" />
+  <title>Para Ti, Mi Amor</title>
   <style>
     body {
+      margin: 0;
       background: linear-gradient(to right, #ffe4ec, #ffd1dc);
       font-family: 'Georgia', serif;
       color: #5c2a2a;
       text-align: center;
-      padding: 40px;
+      overflow-x: hidden;
     }
 
     h1 {
       font-size: 2.8em;
-      margin-bottom: 10px;
-    }
-
-    .corazon {
-      font-size: 3em;
-      margin: 10px 0;
-      animation: latido 1s infinite alternate;
-    }
-
-    @keyframes latido {
-      from { transform: scale(1); }
-      to { transform: scale(1.2); }
+      margin-top: 50px;
     }
 
     p {
@@ -35,11 +25,59 @@
       line-height: 1.6;
     }
 
+    .corazon {
+      font-size: 3em;
+      animation: latido 1s infinite alternate;
+    }
+
+    @keyframes latido {
+      from { transform: scale(1); }
+      to { transform: scale(1.2); }
+    }
+
     .firma {
       margin-top: 50px;
       font-style: italic;
       font-size: 1.3em;
       color: #7a2d2d;
+      margin-bottom: 50px;
+    }
+
+    /* Corazones flotando */
+    .heart {
+      position: fixed;
+      top: -50px;
+      color: red;
+      font-size: 2em;
+      animation: float 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Botón música */
+    #playBtn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #f77;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 1.5em;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      cursor: pointer;
     }
   </style>
 </head>
@@ -66,5 +104,43 @@
     Con todo mi amor,<br>
     tu novio Julio César 💘🌹
   </div>
+
+  <!-- Corazones flotando -->
+  <script>
+    function crearCorazon() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '💗';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 10000);
+    }
+    setInterval(crearCorazon, 500);
+  </script>
+
+  <!-- Reproductor de música -->
+  <audio id="cancion" loop>
+    <source src="https://dl.dropboxusercontent.com/scl/fi/0zj1hz8wm1txenbmvceay/Contigo-Carla-Morrison.mp3?rlkey=ykg8b6s5uvuv6pnfhuig89yo7&dl=0" type="audio/mpeg">
+    Tu navegador no soporta audio HTML5.
+  </audio>
+  <button id="playBtn">▶️</button>
+
+  <script>
+    const cancion = document.getElementById('cancion');
+    const playBtn = document.getElementById('playBtn');
+    let playing = false;
+
+    playBtn.addEventListener('click', () => {
+      if (!playing) {
+        cancion.play();
+        playBtn.textContent = '⏸️';
+      } else {
+        cancion.pause();
+        playBtn.textContent = '▶️';
+      }
+      playing = !playing;
+    });
+  </script>
 </body>
 </html>
